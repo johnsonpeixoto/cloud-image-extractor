@@ -1,0 +1,1 @@
+```$ poetry run python cloud_image_extractor/__init__.py``
