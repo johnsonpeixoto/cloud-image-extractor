@@ -10,6 +10,7 @@ packages = [{include = "cloud_image_extractor"}]
 python = "^3.8"
 flask = "^2.2.2"
 python-dotenv = "^0.21.0"
+boto3 = "^1.26.1"
 
 
 [build-system]
