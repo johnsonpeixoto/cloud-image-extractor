@@ -1,4 +1,6 @@
-## Preparando o ambiente
+# Cloud Image Extractor
+
+> Note: The project is using services provided from AWS (EC2, S3, DynamoDB and RDS).
 
 ### AWS CLI
 
@@ -21,3 +23,10 @@
 - PyExifTool runs on **Python 3.6+**
 - For PyExifTool to function, ``exiftool`` command-line tool must exist on the system.  If ``exiftool`` is not on the ``PATH``, you can specify the full pathname to it by using ``ExifTool(executable=<full path>)``.
 - Your Exiftool version (``exiftool -ver``) >= required version ('12.15'). You can install the latest version of exiftool in **https://exiftool.org/install.html**
+
+
+### Colaborators:
+- Johnson Peixoto
+- Livia Lorrana
+- Robesvânia Araújo
+- Robson Santos

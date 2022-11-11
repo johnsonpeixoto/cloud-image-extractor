@@ -123,6 +123,19 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "pyexiftool"
+version = "0.5.4"
+description = "Python wrapper for exiftool"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.extras]
+docs = ["packaging", "sphinx", "sphinx-autoapi", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
+json = ["ujson"]
+test = ["packaging"]
+
+[[package]]
 name = "python-dateutil"
 version = "2.8.2"
 description = "Extensions to the standard Python datetime module"
@@ -208,7 +221,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a7ccc06d35e675f9ec036667abd444b3719f298381bf2916f87278180fb303e4"
+content-hash = "626a711ac084be69220cf607abb1eebc9ddb685db908cb00f888c0a1251d82db"
 
 [metadata.files]
 boto3 = [
@@ -288,6 +301,10 @@ markupsafe = [
     {file = "MarkupSafe-2.1.1-cp39-cp39-win32.whl", hash = "sha256:d4306c36ca495956b6d568d276ac11fdd9c30a36f1b6eb928070dc5360b22e1c"},
     {file = "MarkupSafe-2.1.1-cp39-cp39-win_amd64.whl", hash = "sha256:46d00d6cfecdde84d40e572d63735ef81423ad31184100411e6e3388d405e247"},
     {file = "MarkupSafe-2.1.1.tar.gz", hash = "sha256:7f91197cc9e48f989d12e4e6fbc46495c446636dfc81b9ccf50bb0ec74b91d4b"},
+]
+pyexiftool = [
+    {file = "PyExifTool-0.5.4-py3-none-any.whl", hash = "sha256:a223852c8899cb118858439b610c820cc5284843f017e42c50d0f13099d6ea15"},
+    {file = "PyExifTool-0.5.4.tar.gz", hash = "sha256:d14244ded3cafb0db01ca8bd85453ed99b0d9a0bcaca6ba3106ff662b580c890"},
 ]
 python-dateutil = [
     {file = "python-dateutil-2.8.2.tar.gz", hash = "sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86"},

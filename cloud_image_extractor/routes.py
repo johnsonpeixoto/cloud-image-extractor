@@ -1,14 +1,13 @@
-from cmath import log
-import logging
+# from cmath import log
 
-from botocore.exceptions import ClientError
 from cloud_image_extractor import app
 from flask import render_template, request
 from werkzeug.utils import secure_filename
 
-import boto3
+from controller import put_metadata, get_metadata
+from utils.helpers import generate_id
 
-S3_BUCKET = 'imagesstore'
+import boto3
 
 @app.route('/')
 def index():
@@ -19,23 +18,30 @@ def upload():
     if request.method == 'POST':
         img = request.files['file']
         if img:
+                uuid = generate_id()
                 filename = secure_filename(img.filename)
-                print(filename)
-                img.save(filename)
-                
-                # Upload the file
-                s3_client = boto3.client('s3')
-                try:
-                    response = s3_client.upload_file(filename, S3_BUCKET, filename)
-                    msg = "Upload Done !"
+                new_name = "{}-{}".format(uuid, filename)
 
-                except ClientError as e:
-                    logging.error(e)
-                    msg = "Upload Fail X"        
+                img.save("./tmp/" + new_name)
 
-    return render_template("file_upload_to_s3.html",msg =msg)
+                response = put_metadata(uuid, new_name)
+                print(response)
 
-@app.route('/add', methods=['POST'])
+                msg = "Upload Done !"
+        else:
+            msg = "File invalid X"
+
+    return ({"msg":msg})
+
+@app.route('/add')
 def post():
-    return 'Post Method'
-    
+    response = put_metadata("d541b188-3545-4147-9b3a-3c07faec3b69", "testeteste")
+    print(response)
+
+    return (response)
+
+@app.route('/get', methods=['GET'])
+def get():
+    response = get_metadata()
+
+    return response
