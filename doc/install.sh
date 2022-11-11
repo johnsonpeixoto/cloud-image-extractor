@@ -4,7 +4,7 @@ echo "Setting system environment..."
 sudo apt update
 
 echo "Install system requirements..."
-sudo apt install python3 unzip
+sudo apt install python3 unzip python3-flask
 
 echo "Install poetry..."
 curl -sSL https://install.python-poetry.org | python3 -

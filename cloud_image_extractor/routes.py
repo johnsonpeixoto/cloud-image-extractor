@@ -4,10 +4,9 @@ from cloud_image_extractor import app
 from flask import render_template, request
 from werkzeug.utils import secure_filename
 
-from controller import put_metadata, get_metadata
-from utils.helpers import generate_id
+import utils.controller as controller
 
-import boto3
+from cloud_image_extractor.utils.helpers import generate_id
 
 @app.route('/')
 def index():
@@ -24,7 +23,7 @@ def upload():
 
                 img.save("./tmp/" + new_name)
 
-                response = put_metadata(uuid, new_name)
+                response = controller.put_metadata(uuid, new_name)
                 print(response)
 
                 msg = "Upload Done !"
@@ -33,15 +32,15 @@ def upload():
 
     return ({"msg":msg})
 
-@app.route('/add')
-def post():
-    response = put_metadata("d541b188-3545-4147-9b3a-3c07faec3b69", "testeteste")
-    print(response)
+# @app.route('/add')
+# def post():
+#     response = controller.put_metadata("d541b188-3545-4147-9b3a-3c07faec3b69", "testeteste")
+#     print(response)
 
-    return (response)
+#     return (response)
 
 @app.route('/get', methods=['GET'])
 def get():
-    response = get_metadata()
+    response = controller.get_metadata()
 
     return response

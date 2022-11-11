@@ -1,15 +1,12 @@
 
 import boto3
-from cloud_image_extractor import config
 
 import logging
 from botocore.exceptions import ClientError
 
-import exiftool
 from exiftool import ExifToolHelper
 
 import json
-from utils.helpers import generate_id
 
 # loading the local profile from AWS CLI
 session = boto3.Session(profile_name='default')
