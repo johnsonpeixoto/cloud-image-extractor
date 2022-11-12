@@ -1,17 +1,23 @@
 #!python3
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
 
 from . import helpers
 from . import controller
 
 app = Flask(__name__, template_folder='template')
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
 def index():
     return render_template('file_upload_to_s3.html')
 
+@app.route('/hello')
+def hello():
+    return ({"msg":"Hello"})
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -36,8 +42,7 @@ def upload():
 @app.route('/get', methods=['GET'])
 def get():
     response = controller.get_metadata()
-
-    return response
+    return jsonify(response)
 
 
 if __name__ == '__main__':

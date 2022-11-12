@@ -7,7 +7,7 @@ env
 # Images
 *.png
 *.jpg
-/temp
+tmp/*
 
 # Packages
 *.egg

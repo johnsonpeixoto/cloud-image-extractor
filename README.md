@@ -15,7 +15,7 @@
 
 1. Install ``poetry`` on your system
 2. ```$ poetry install```
-3. ```$ poetry run python cloud_image_extractor/__init__.py```
+3. ```$ poetry run flask run --host=0.0.0.0 --port=8080```
 
 ---
 
