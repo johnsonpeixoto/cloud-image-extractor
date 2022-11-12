@@ -34,12 +34,9 @@
   </div>
   <hr>
 
-
   <div class="container">
     <h2>Image Extractor</h2>
-
     <div class="card" style="width:400px">
-
       <div class="card-body ">
         <form action="/upload" method="post" enctype="multipart/form-data">
           <p class="card-text">Escolha uma imagem do seu computador</p>
@@ -50,9 +47,26 @@
         {{msg}}
       </div>
     </div>
-    <br>
+
+    <h3 style="margin-top: 25px;">Últimas imagens enviadas</h3>
+    <bold>Nome</bold>
+    <ul id="images">
+    </ul>
   </div>
 
+  <script>
+    fetch('/get')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(jsonResponse) {
+      jsonResponse.forEach(element => {
+        const liItem = document.createElement('LI');
+        liItem.innerHTML = element.filename;
+        document.getElementById('images').appendChild(liItem);
+      });
+    })
+  </script>
 </body>
 
 </html>
