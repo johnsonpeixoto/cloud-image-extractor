@@ -4,10 +4,6 @@ env
 # C extensions
 *.so
 
-# Images
-*.png
-*.jpg
-
 # Packages
 *.egg
 *.egg-info
