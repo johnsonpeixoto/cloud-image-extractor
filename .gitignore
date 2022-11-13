@@ -4,6 +4,9 @@ env
 # C extensions
 *.so
 
+# temp folder
+tmp/*
+
 # Packages
 *.egg
 *.egg-info
