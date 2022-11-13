@@ -3,41 +3,92 @@
 
 <head>
   <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="static/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
+    name='viewport' />
+
   <title>
     Image Extractor
   </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
-    name='viewport' />
+
+  <link rel="apple-touch-icon" sizes="76x76" href="static/img/apple-icon.png">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+
   <!-- Fonts and icons -->
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+
   <!-- CSS Files -->
   <link href="static/css/bootstrap.min.css" rel="stylesheet" />
   <link href="static/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+
   <!-- CSS -->
   <link href="static/demo/demo.css" rel="stylesheet" />
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <!-- jQuery library -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <style>
+    ul {
+      display: grid;
+      align-items: center;
+      padding: 0;
+    }
+
+    ul>a {
+      padding: 4px 3px;
+    }
+
+    modal-body>table>tbody>tr>td {
+      padding: 0px 10px !important;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="navbar">
-    <h2> </h2>
+  <div class="navbar" style="justify-content: space-around">
+    <h2>Image Extractor</h2>
   </div>
   <hr>
 
+  <!-- Modal -->
+  <div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table>
+            <tr>
+              <th>Atributo</th>
+              <th>Valor</th>
+            </tr>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="container">
-    <h2>Image Extractor</h2>
-    <div class="card" style="width:400px">
-      <div class="card-body ">
+    <div class="row">
+      <div class="col-md">
+        <h3 style="margin-top: 25px;">Últimas imagens enviadas</h3>
+        <ul id="images"></ul>
+      </div>
+      <div class="col-md" style="display: flex; justify-content: center; align-items: center;">
         <form action="/upload" method="post" enctype="multipart/form-data">
           <p class="card-text">Escolha uma imagem do seu computador</p>
           <input type="file" name="file" value="file">
@@ -47,25 +98,44 @@
         {{msg}}
       </div>
     </div>
-
-    <h3 style="margin-top: 25px;">Últimas imagens enviadas</h3>
-    <bold>Nome</bold>
-    <ul id="images">
-    </ul>
   </div>
 
   <script>
-    fetch('/get')
-    .then(function(response) {
+    fetch('/get').then(function (response) {
       return response.json();
     })
-    .then(function(jsonResponse) {
-      jsonResponse.forEach(element => {
-        const liItem = document.createElement('LI');
-        liItem.innerHTML = element.filename;
-        document.getElementById('images').appendChild(liItem);
+      .then(function (jsonResponse) {
+        for (var i = 0; i < jsonResponse.length; i++) {
+          // console.log(jsonResponse[i])
+          const aItem = document.createElement('a');
+          aItem.setAttribute('href', "#");
+          aItem.setAttribute('index', "" + i);
+          aItem.setAttribute('data-toggle', "modal");
+          aItem.setAttribute('data-target', "#exampleModal");
+          aItem.innerText = jsonResponse[i].filename;
+          document.getElementById('images').appendChild(aItem);
+        }
       });
-    })
+
+    $("#images").click(function (e) {
+      e.preventDefault();
+      element = e.originalEvent.srcElement;
+      id = element.attributes.index.value;
+      console.log(id);
+      res = fetch('/get?id=' + id).then(function (response) {
+        return response.json();
+      })
+        .then(function (jsonResponse) {
+          console.log(jsonResponse.metadata);
+          $(document).find(".modal-title").text(jsonResponse.metadata['File:FileName']);
+          for (const key in jsonResponse.metadata) {
+            console.log(key);
+            $(document).find(".modal-body table").append("<tr><td>" + key + "</td><td>" + jsonResponse.metadata[key] + "</td></tr>")
+          };
+        });
+    });
+
+
   </script>
 </body>
 

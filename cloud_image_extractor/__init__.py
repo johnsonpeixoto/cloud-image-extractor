@@ -15,10 +15,6 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def index():
     return render_template('file_upload_to_s3.html')
 
-@app.route('/hello')
-def hello():
-    return ({"msg":"Hello"})
-
 @app.route('/upload', methods=['POST'])
 def upload():
     if request.method == 'POST':
@@ -37,13 +33,19 @@ def upload():
         else:
             msg = "File invalid X"
 
-    return ({"msg":msg})
+    return render_template('file_upload_to_s3.html', msg=msg)
+
 
 @app.route('/get', methods=['GET'])
 def get():
-    response = controller.get_metadata()
-    return jsonify(response)
-
+    args = request.args
+    if args:
+        id = int(args.get("id"))
+        response = controller.get_metadata()
+        return jsonify(response[id])
+    else:
+        response = controller.get_metadata()
+        return jsonify(response)
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000)
