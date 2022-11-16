@@ -1,2 +1,0 @@
-FLASK_APP=cloud_image_extractor
-FLASK_ENV=development
