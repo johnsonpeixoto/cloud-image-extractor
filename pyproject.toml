@@ -15,6 +15,9 @@ pyexiftool = "^0.5.4"
 flask-cors = "^3.0.10"
 
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.17.1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
